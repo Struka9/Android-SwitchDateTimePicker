@@ -257,6 +257,7 @@ public class SwitchDateTimeDialogFragment extends DialogFragment {
                 dateTimeCalendar.set(Calendar.MINUTE, minuteTime);
             }
         };
+
         // Init time with saved elements
         timePicker = new SwitchTimePicker(getContext(), onTimeSelectedListener, savedInstanceState);
         timePicker.setIs24HourMode(is24HoursMode);
@@ -269,17 +270,17 @@ public class SwitchDateTimeDialogFragment extends DialogFragment {
         // Construct DatePicker
         materialCalendarView = dateTimeLayout.findViewById(com.kunzisoft.switchdatetime.R.id.datePicker);
         materialCalendarView.state().edit()
-                .setMinimumDate(CalendarDay.from(Utils.toLocalDate(minimumDateTime)))
-                .setMaximumDate(CalendarDay.from(Utils.toLocalDate(maximumDateTime)))
+                .setMinimumDate(Utils.toCalendarDay(minimumDateTime))
+                .setMaximumDate(Utils.toCalendarDay(maximumDateTime))
                 .commit();
         materialCalendarView.setCurrentDate(Utils.toLocalDate(dateTimeCalendar));
-        materialCalendarView.setDateSelected(CalendarDay.from(Utils.toLocalDate(dateTimeCalendar)), true);
-        ;
+        materialCalendarView.setDateSelected(Utils.toCalendarDay(dateTimeCalendar), true);
+
         materialCalendarView.setOnDateChangedListener(new OnDateSelectedListener() {
             @Override
             public void onDateSelected(@NonNull MaterialCalendarView widget, @NonNull CalendarDay calendarDay, boolean selected) {
                 dateTimeCalendar.set(Calendar.YEAR, calendarDay.getYear());
-                dateTimeCalendar.set(Calendar.MONTH, calendarDay.getMonth());
+                dateTimeCalendar.set(Calendar.MONTH, calendarDay.getMonth() - 1);
                 dateTimeCalendar.set(Calendar.DAY_OF_MONTH, calendarDay.getDay());
                 listPickerYearView.assignCurrentYear(calendarDay.getYear());
                 yearHeaderValues.setText(yearSimpleDate.format(dateTimeCalendar.getTime()));
@@ -302,7 +303,7 @@ public class SwitchDateTimeDialogFragment extends DialogFragment {
 
                 // Unfortunately, we have lags here and thread isn't a solution :/
                 materialCalendarView.setCurrentDate(Utils.toLocalDate(dateTimeCalendar));
-                materialCalendarView.setDateSelected(CalendarDay.from(Utils.toLocalDate(dateTimeCalendar)), true);
+                materialCalendarView.setDateSelected(Utils.toCalendarDay(dateTimeCalendar), true);
                 // For resolve bug of switch year
                 materialCalendarView.goToNext();
                 materialCalendarView.goToPrevious();

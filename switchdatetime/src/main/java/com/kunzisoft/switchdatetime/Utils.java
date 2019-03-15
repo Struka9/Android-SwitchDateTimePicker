@@ -8,6 +8,8 @@ import android.os.Build;
 import android.view.View;
 import android.view.accessibility.AccessibilityManager;
 
+import com.prolificinteractive.materialcalendarview.CalendarDay;
+
 import org.threeten.bp.LocalDate;
 
 import java.util.Calendar;
@@ -25,6 +27,10 @@ public class Utils {
 
     public static LocalDate toLocalDate(Calendar calendar) {
         return LocalDate.of(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH) + 1, calendar.get(Calendar.DAY_OF_MONTH));
+    }
+
+    public static CalendarDay toCalendarDay(Calendar calendar) {
+        return CalendarDay.from(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH) + 1, calendar.get(Calendar.DAY_OF_MONTH));
     }
 
     public static ObjectAnimator getPulseAnimator(View labelToAnimate, float decreaseRatio, float increaseRatio) {
