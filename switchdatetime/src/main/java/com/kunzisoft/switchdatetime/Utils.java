@@ -8,6 +8,10 @@ import android.os.Build;
 import android.view.View;
 import android.view.accessibility.AccessibilityManager;
 
+import org.threeten.bp.LocalDate;
+
+import java.util.Calendar;
+
 public class Utils {
 
     private static final int ANIMATION_DELAY = 0;
@@ -17,6 +21,10 @@ public class Utils {
         ObjectAnimator monthDayAnim = getPulseAnimator(view, 0.9F, 1.05F);
         monthDayAnim.setStartDelay(ANIMATION_DELAY);
         monthDayAnim.start();
+    }
+
+    public static LocalDate toLocalDate(Calendar calendar) {
+        return LocalDate.of(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH) + 1, calendar.get(Calendar.DAY_OF_MONTH));
     }
 
     public static ObjectAnimator getPulseAnimator(View labelToAnimate, float decreaseRatio, float increaseRatio) {

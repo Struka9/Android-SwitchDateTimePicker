@@ -269,11 +269,12 @@ public class SwitchDateTimeDialogFragment extends DialogFragment {
         // Construct DatePicker
         materialCalendarView = dateTimeLayout.findViewById(com.kunzisoft.switchdatetime.R.id.datePicker);
         materialCalendarView.state().edit()
-                .setMinimumDate(CalendarDay.from(minimumDateTime))
-                .setMaximumDate(CalendarDay.from(maximumDateTime))
+                .setMinimumDate(CalendarDay.from(Utils.toLocalDate(minimumDateTime)))
+                .setMaximumDate(CalendarDay.from(Utils.toLocalDate(maximumDateTime)))
                 .commit();
-        materialCalendarView.setCurrentDate(dateTimeCalendar);
-        materialCalendarView.setDateSelected(dateTimeCalendar, true);
+        materialCalendarView.setCurrentDate(Utils.toLocalDate(dateTimeCalendar));
+        materialCalendarView.setDateSelected(CalendarDay.from(Utils.toLocalDate(dateTimeCalendar)), true);
+        ;
         materialCalendarView.setOnDateChangedListener(new OnDateSelectedListener() {
             @Override
             public void onDateSelected(@NonNull MaterialCalendarView widget, @NonNull CalendarDay calendarDay, boolean selected) {
@@ -300,8 +301,8 @@ public class SwitchDateTimeDialogFragment extends DialogFragment {
                 yearHeaderValues.setText(yearSimpleDate.format(dateTimeCalendar.getTime()));
 
                 // Unfortunately, we have lags here and thread isn't a solution :/
-                materialCalendarView.setCurrentDate(dateTimeCalendar.getTime());
-                materialCalendarView.setDateSelected(dateTimeCalendar, true);
+                materialCalendarView.setCurrentDate(Utils.toLocalDate(dateTimeCalendar));
+                materialCalendarView.setDateSelected(CalendarDay.from(Utils.toLocalDate(dateTimeCalendar)), true);
                 // For resolve bug of switch year
                 materialCalendarView.goToNext();
                 materialCalendarView.goToPrevious();
